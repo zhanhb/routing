@@ -18,7 +18,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=cjdns
 PKG_VERSION:=v21
-PKG_RELEASE:=3
+PKG_RELEASE:=$(AUTORELEASE)
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/cjdelisle/cjdns/tar.gz/$(PKG_NAME)-$(PKG_VERSION)?
@@ -124,15 +124,6 @@ define Package/cjdns/install
 	$(CP) \
 		./lua/cjdns/* \
 		$(1)/usr/lib/lua/cjdns
-endef
-
-define Package/cjdns/postinst
-#!/bin/sh
-if [ -z $${IPKG_INSTROOT} ] ; then
-	( . /etc/uci-defaults/cjdns ) && rm -f /etc/uci-defaults/cjdns
-	/etc/init.d/cjdns enabled || /etc/init.d/cjdns enable
-	exit 0
-fi
 endef
 
 define Package/cjdns-tests/install
